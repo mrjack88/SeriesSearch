@@ -1,132 +1,138 @@
-import AppBar from '@material-ui/core/AppBar';
-import Badge from '@material-ui/core/Badge';
-import IconButton from '@material-ui/core/IconButton';
-import InputBase from '@material-ui/core/InputBase';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import { fade, makeStyles } from '@material-ui/core/styles';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
-import MenuIcon from '@material-ui/icons/Menu';
-import MoreIcon from '@material-ui/icons/MoreVert';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import SearchIcon from '@material-ui/icons/Search';
-import React from 'react';
-import { withRouter } from 'react-router-dom';
+import AppBar from "@material-ui/core/AppBar"
+import Badge from "@material-ui/core/Badge"
+import IconButton from "@material-ui/core/IconButton"
+import InputBase from "@material-ui/core/InputBase"
+import Menu from "@material-ui/core/Menu"
+import MenuItem from "@material-ui/core/MenuItem"
+import { fade, makeStyles } from "@material-ui/core/styles"
+import Toolbar from "@material-ui/core/Toolbar"
+import Typography from "@material-ui/core/Typography"
+import AccountCircle from "@material-ui/icons/AccountCircle"
+import MailIcon from "@material-ui/icons/Mail"
+import MenuIcon from "@material-ui/icons/Menu"
+import MoreIcon from "@material-ui/icons/MoreVert"
+import NotificationsIcon from "@material-ui/icons/Notifications"
+import SearchIcon from "@material-ui/icons/Search"
+import React from "react"
+import { withRouter } from "react-router-dom"
 
 const useStyles = makeStyles(theme => ({
   grow: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(2)
   },
   title: {
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'block',
-    },
+    display: "none",
+    [theme.breakpoints.up("sm")]: {
+      display: "block"
+    }
   },
   search: {
-    position: 'relative',
+    position: "relative",
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
+    "&:hover": {
+      backgroundColor: fade(theme.palette.common.white, 0.25)
     },
     marginRight: theme.spacing(2),
     marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing(3),
-      width: 'auto',
+      width: "auto"
     },
-    display: 'flex',
-    justifyContent: 'flex-end',
+    display: "flex",
+    justifyContent: "flex-end"
   },
   searchIcon: {
     width: theme.spacing(7),
-    height: '100%',
-    position: 'absolute',
+    height: "100%",
+    position: "absolute",
     width: 35,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'right',
-    cursor: 'pointer',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "right",
+    cursor: "pointer"
   },
   inputRoot: {
-    color: 'inherit',
+    color: "inherit"
   },
   inputInput: {
     padding: theme.spacing(1, 7, 1, 1),
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: 200,
-    },
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: 200
+    }
   },
   sectionDesktop: {
-    display: 'none',
-    [theme.breakpoints.up('md')]: {
-      display: 'flex',
-    },
+    display: "none",
+    [theme.breakpoints.up("md")]: {
+      display: "flex"
+    }
   },
   sectionMobile: {
-    display: 'flex',
-    [theme.breakpoints.up('md')]: {
-      display: 'none',
-    },
-  },
-}));
+    display: "flex",
+    [theme.breakpoints.up("md")]: {
+      display: "none"
+    }
+  }
+}))
 
 function PrimarySearchAppBar(props) {
-  const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const [query, setQuery] = React.useState('');
+  const classes = useStyles()
+  const [anchorEl, setAnchorEl] = React.useState(null)
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)
+  const [query, setQuery] = React.useState("")
 
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const isMenuOpen = Boolean(anchorEl)
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
 
   function handleProfileMenuOpen(event) {
-    setAnchorEl(event.currentTarget);
+    setAnchorEl(event.currentTarget)
   }
 
   function handleMobileMenuClose() {
-    setMobileMoreAnchorEl(null);
+    setMobileMoreAnchorEl(null)
   }
 
   function handleMenuClose() {
-    setAnchorEl(null);
-    handleMobileMenuClose();
+    setAnchorEl(null)
+    handleMobileMenuClose()
   }
 
   function handleMenuClose() {
-    props.history.push('/signin');
+    props.history.push("/signin")
   }
 
   function handleMobileMenuOpen(event) {
-    setMobileMoreAnchorEl(event.currentTarget);
+    setMobileMoreAnchorEl(event.currentTarget)
   }
 
   function handleQueryChange(event) {
-    setQuery(event.target.value);
+    setQuery(event.target.value)
   }
 
   function searchOnClick() {
-    props.onSearch(query);
+    props.onSearch(query)
   }
 
-  const menuId = 'primary-search-account-menu';
+  function onKeyPressed(event) {
+    if (event.key === "Enter") {
+      props.onSearch(query)
+    }
+  }
+
+  const menuId = "primary-search-account-menu"
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
       id={menuId}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
@@ -134,16 +140,16 @@ function PrimarySearchAppBar(props) {
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
       <MenuItem onClick={handleMenuClose}>Log out</MenuItem>
     </Menu>
-  );
+  )
 
-  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const mobileMenuId = "primary-search-account-menu-mobile"
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
       id={mobileMenuId}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
@@ -175,7 +181,7 @@ function PrimarySearchAppBar(props) {
         <p>Profile</p>
       </MenuItem>
     </Menu>
-  );
+  )
 
   return (
     <div className={classes.grow}>
@@ -199,9 +205,10 @@ function PrimarySearchAppBar(props) {
               placeholder="Search…"
               classes={{
                 root: classes.inputRoot,
-                input: classes.inputInput,
+                input: classes.inputInput
               }}
-              inputProps={{ 'aria-label': 'search' }}
+              inputProps={{ "aria-label": "search" }}
+              onKeyPress={onKeyPressed}
             />
             <div className={classes.searchIcon}>
               <SearchIcon onClick={searchOnClick} />
@@ -236,7 +243,7 @@ function PrimarySearchAppBar(props) {
       {renderMobileMenu}
       {renderMenu}
     </div>
-  );
+  )
 }
 
-export default withRouter(PrimarySearchAppBar);
+export default withRouter(PrimarySearchAppBar)
