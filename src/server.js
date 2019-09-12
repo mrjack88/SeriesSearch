@@ -1,51 +1,49 @@
-import { ServerStyleSheets, ThemeProvider } from '@material-ui/styles';
-import express from 'express';
-import qs from 'qs';
-import React from 'react';
-import { renderToString } from 'react-dom/server';
-import { Provider } from 'react-redux';
-import { StaticRouter } from 'react-router-dom';
-import serialize from 'serialize-javascript';
-import App from './containers/App';
-import configureStore from './store/configureStore';
-import theme from './theme';
+import { ServerStyleSheets, ThemeProvider } from "@material-ui/styles"
+import express from "express"
+import qs from "qs"
+import React from "react"
+import { renderToString } from "react-dom/server"
+import { Provider } from "react-redux"
+import { StaticRouter } from "react-router-dom"
+import serialize from "serialize-javascript"
+import App from "./containers/App"
+import configureStore from "./store/configureStore"
+import theme from "./theme"
 
-const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
+const assets = require(process.env.RAZZLE_ASSETS_MANIFEST)
 
-const server = express();
+const server = express()
 
 server
-  .disable('x-powered-by')
+  .disable("x-powered-by")
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
-  .get('/*', (req, res) => {
-    const context = {};
-    const sheets = new ServerStyleSheets();
+  .get("/*", (req, res) => {
+    const context = {}
+    const sheets = new ServerStyleSheets()
     // Read the counter from the request, if provided
-    const params = qs.parse(req.query);
-    const counter = parseInt(params.counter, 10) || 5;
+    const params = qs.parse(req.query)
 
     // Compile an initial state
-    const preloadedState = { counter };
+    const preloadedState = { shows: { searchdata: [], error: {} } }
 
     // Create a new Redux store instance
-    const store = configureStore(preloadedState);
+    const store = configureStore(preloadedState)
 
     const markup = renderToString(
       sheets.collect(
-        <ThemeProvider theme={theme}>
-          <Provider store={store}>
-            <StaticRouter context={context} location={req.url}>
+        <Provider store={store}>
+          <StaticRouter context={context} location={req.url}>
+            <ThemeProvider theme={theme}>
               <App />
-            </StaticRouter>
-          </Provider>
-        </ThemeProvider>
+            </ThemeProvider>
+          </StaticRouter>
+        </Provider>
       )
-    );
-    const css = sheets.toString();
+    )
+    const css = sheets.toString()
 
     // Grab the initial state from our Redux store
-    const finalState = store.getState();
-
+    const finalState = store.getState()
     res.status(200).send(`
 <!doctype html>
 <html lang="">
@@ -58,11 +56,11 @@ server
   ${
     assets.client.css
       ? `<link rel="stylesheet" href="${assets.client.css}">`
-      : ''
+      : ""
   }
-  ${css ? `<style id='jss-ssr'>${css}</style>` : ''}
+  ${css ? `<style id='jss-ssr'>${css}</style>` : ""}
     ${
-      process.env.NODE_ENV === 'production'
+      process.env.NODE_ENV === "production"
         ? `<script src="${assets.client.js}" defer></script>`
         : `<script src="${assets.client.js}" defer crossorigin></script>`
     }
@@ -73,7 +71,7 @@ server
     window.__PRELOADED_STATE__ = ${serialize(finalState)}
   </script>
 </body>
-</html>`);
-  });
+</html>`)
+  })
 
-export default server;
+export default server

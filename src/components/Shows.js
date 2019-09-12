@@ -4,8 +4,8 @@ import List from "@material-ui/core/List"
 import ListItem from "@material-ui/core/ListItem"
 import ListItemAvatar from "@material-ui/core/ListItemAvatar"
 import ListItemText from "@material-ui/core/ListItemText"
-import { makeStyles } from "@material-ui/core/styles"
 import Typography from "@material-ui/core/Typography"
+import { makeStyles } from "@material-ui/styles"
 import React, { useEffect } from "react"
 
 const useStyles = makeStyles(theme => ({

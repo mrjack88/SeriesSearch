@@ -63,7 +63,7 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(
+export default withStyles(styles)(connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(withRouter(Home)))
+)(withRouter(Home)))
