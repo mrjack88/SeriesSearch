@@ -1,3 +1,4 @@
+import Collapse from "@material-ui/core/Collapse"
 import Paper from "@material-ui/core/Paper"
 import { withStyles } from "@material-ui/styles"
 import React from "react"
@@ -43,9 +44,15 @@ class Home extends React.Component {
       <div>
         <MenuAppBar onSearch={this.handleQueryChange} />
         <section className={classes.section}>
-          <Paper className={classes.root} elevation={4}>
-            <AlignItemsList query={this.state.query} onSearch={this.getShows} data={this.props.searchdata}/>
-          </Paper>
+          <Collapse in={this.props.searchdata.length > 0}>
+            <Paper className={classes.root} elevation={4}>
+              <AlignItemsList
+                query={this.state.query}
+                onSearch={this.getShows}
+                data={this.props.searchdata}
+              />
+            </Paper>
+          </Collapse>
         </section>
       </div>
     )
@@ -54,7 +61,7 @@ class Home extends React.Component {
 
 const mapStateToProps = function(state) {
   return {
-    searchdata: state.shows.searchdata
+    searchdata: state.shows.searchdata || []
   }
 }
 const mapDispatchToProps = dispatch => {
@@ -63,7 +70,9 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default withStyles(styles)(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(Home)))
+export default withStyles(styles)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(withRouter(Home))
+)

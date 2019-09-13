@@ -24,7 +24,7 @@ server
     const params = qs.parse(req.query)
 
     // Compile an initial state
-    const preloadedState = { shows: { searchdata: [], error: {} } }
+    const preloadedState = { shows: { searchdata: [], error: {}, isFetchingData: false } }
 
     // Create a new Redux store instance
     const store = configureStore(preloadedState)

@@ -68,3 +68,8 @@ export default function AlignItemsList(props) {
     </List>
   )
 }
+
+AlignItemsList.defaultProps = {
+  data: [],
+  query:""
+};

@@ -15,6 +15,7 @@ import NotificationsIcon from "@material-ui/icons/Notifications"
 import SearchIcon from "@material-ui/icons/Search"
 import React from "react"
 import { withRouter } from "react-router-dom"
+import LoadingProgress from "./LoadingProgress"
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -239,9 +240,11 @@ function PrimarySearchAppBar(props) {
             </IconButton>
           </div>
         </Toolbar>
+      <LoadingProgress/>
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
+     
     </div>
   )
 }
