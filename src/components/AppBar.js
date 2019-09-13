@@ -104,7 +104,7 @@ function PrimarySearchAppBar(props) {
     handleMobileMenuClose()
   }
 
-  function handleMenuClose() {
+  function logout() {
     props.history.push("/signin")
   }
 
@@ -139,7 +139,7 @@ function PrimarySearchAppBar(props) {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Log out</MenuItem>
+      <MenuItem onClick={logout}>Log out</MenuItem>
     </Menu>
   )
 
