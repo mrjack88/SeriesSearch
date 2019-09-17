@@ -36,7 +36,9 @@ class Home extends React.Component {
     this.setState({ query })
   }
   getShows = () => {
-    this.props.getShows(this.state.query)
+    if (this.state.query != "") {
+      this.props.getShows(this.state.query)
+    }
   }
   render() {
     const { classes } = this.props

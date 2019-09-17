@@ -15,6 +15,6 @@ export default function projects(state = initialState, action) {
     case ERROR_SHOWS_SEARCH:
       return { ...state, error: action.error, isFetchingData: false }
     default:
-      return initialState
+      return state
   }
 }
