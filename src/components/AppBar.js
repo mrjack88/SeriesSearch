@@ -86,7 +86,6 @@ function PrimarySearchAppBar(props) {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)
-  const [query, setQuery] = React.useState("")
 
   const isMenuOpen = Boolean(anchorEl)
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
@@ -113,16 +112,16 @@ function PrimarySearchAppBar(props) {
   }
 
   function handleQueryChange(event) {
-    setQuery(event.target.value)
+    props.handleQueryChange(event.target.value)
   }
 
   function searchOnClick() {
-    props.onSearch(query)
+    props.onSearch()
   }
 
   function onKeyPressed(event) {
     if (event.key === "Enter") {
-      props.onSearch(query)
+      props.onSearch()
     }
   }
 
@@ -201,7 +200,7 @@ function PrimarySearchAppBar(props) {
           </Typography>
           <div className={classes.search}>
             <InputBase
-              value={query}
+              value={props.query}
               onChange={handleQueryChange}
               placeholder="Search…"
               classes={{
