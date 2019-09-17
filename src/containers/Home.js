@@ -37,23 +37,25 @@ class Home extends React.Component {
   }
   getShows = () => {
     if (this.state.query != "") {
+      this.props.history.push('?q='+this.state.query)
       this.props.getShows(this.state.query)
     }
   }
   render() {
     const { classes } = this.props
+    const isThereAnyData = this.props.searchdata.length > 0;
     return (
       <div>
         <MenuAppBar onSearch={this.handleQueryChange} />
         <section className={classes.section}>
-          <Collapse in={this.props.searchdata.length > 0}>
-            <Paper className={classes.root} elevation={4}>
+          <Collapse in={isThereAnyData}>
+            {isThereAnyData && <Paper className={classes.root} elevation={4}>
               <AlignItemsList
                 query={this.state.query}
                 onSearch={this.getShows}
                 data={this.props.searchdata}
               />
-            </Paper>
+            </Paper>}
           </Collapse>
         </section>
       </div>
