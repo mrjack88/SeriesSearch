@@ -1,0 +1,20 @@
+import { ERROR_USER_SIGNUP, RECEIVED_USER_SIGNUP, REQUEST_USER_SIGNUP } from "../actions"
+
+const initialState = {
+  userData: {},
+  error: {},
+  isFetchingData: false
+}
+
+export default function projects(state = initialState, action) {
+  switch (action.type) {
+    case REQUEST_USER_SIGNUP:
+      return { ...state, isFetchingData: true }
+    case RECEIVED_USER_SIGNUP:
+      return { ...state, userData: action.response, isFetchingData: false }
+    case ERROR_USER_SIGNUP:
+      return { ...state, error: action.error, isFetchingData: false }
+    default:
+      return state
+  }
+}
