@@ -8,9 +8,14 @@ export const REQUEST_USER_SIGNOUT = 'REQUEST_USER_SIGNOUT';
 export const RECEIVED_USER_SIGNOUT = 'RECEIVED_USER_SIGNOUT';
 export const ERROR_USER_SIGNOUT = 'ERROR_USER_SIGNOUT';
 
+export const REQUEST_USER_SIGNIN = 'REQUEST_USER_SIGNIN';
+export const RECEIVED_USER_SIGNIN = 'RECEIVED_USER_SIGNIN';
+export const ERROR_USER_SIGNIN = 'ERROR_USER_SIGNIN';
+
 export const userActions = {
   signup,
-  signout
+  signout,
+  signin
 };
 
 function signup(email, password) {
@@ -38,6 +43,21 @@ function signout() {
       },
       error => {
         dispatch({ type: ERROR_USER_SIGNOUT, error });
+      }
+    );
+  };
+}
+
+function signin(email, password) {
+  return dispatch => {
+    dispatch({ type: REQUEST_USER_SIGNIN });
+
+    userService.signin(email, password).then(
+      response => {
+        dispatch({ type: RECEIVED_USER_SIGNIN, response });
+      },
+      error => {
+        dispatch({ type: ERROR_USER_SIGNIN, error });
       }
     );
   };
