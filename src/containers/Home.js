@@ -6,7 +6,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { withRouter } from "react-router"
 import { bindActionCreators } from "redux"
-import { showsActions } from "../actions"
+import { showsActions, userActions } from "../actions"
 import MenuAppBar from "../components/AppBar.js"
 import AlignItemsList from "../components/Shows.js"
 import "./App.css"
@@ -60,7 +60,7 @@ class Home extends React.Component {
     const isThereAnyData = this.props.searchdata.length > 0
     return (
       <div>
-        <MenuAppBar handleQueryChange={this.handleQueryChange} query={this.state.query} onSearch={this.getShows}/>
+        <MenuAppBar handleQueryChange={this.handleQueryChange} query={this.state.query} onSearch={this.getShows} onSignOut={this.props.signout}/>
         <section className={classes.section}>
           <Collapse in={isThereAnyData}>
             {isThereAnyData && (
@@ -85,7 +85,8 @@ const mapStateToProps = function(state) {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    getShows: bindActionCreators(showsActions.getShows, dispatch)
+    getShows: bindActionCreators(showsActions.getShows, dispatch),
+    signout: bindActionCreators(userActions.signout, dispatch)
   }
 }
 

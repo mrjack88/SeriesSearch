@@ -104,7 +104,8 @@ function PrimarySearchAppBar(props) {
   }
 
   function logout() {
-    props.history.push("/signin")
+    props.onSignOut();
+    // props.history.pushyarn start("/signin")
   }
 
   function handleMobileMenuOpen(event) {
