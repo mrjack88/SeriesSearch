@@ -4,37 +4,6 @@ import React from "react"
 import { Redirect, Route } from "react-router-dom"
 import baseApp from "../base"
 
-// function PrivateRoute({ component: Component, ...rest }) {
-//   function fakeAuth() {
-//     const user = baseApp.auth().onAuthStateChanged(function(user) {
-//         if (user) {
-//           // User is signed in.
-//           console.log(user)
-//           return true;
-//         }
-//       });
-//   }
-//   return (
-//     <Route
-//       {...rest}
-//       render={props =>
-//         fakeAuth() ? (
-//           <Component {...props} />
-//         ) : (
-//           <Redirect
-//             to={{
-//               pathname: "/signin",
-//               state: { from: props.location }
-//             }}
-//           />
-//         )
-//       }
-//     />
-//   )
-// }
-
-// export default PrivateRoute
-
 export default class PrivateRoute extends React.Component {
   constructor(props) {
     super(props)
@@ -45,18 +14,9 @@ export default class PrivateRoute extends React.Component {
   }
 
   componentDidMount() {
-    baseApp.auth().onAuthStateChanged( user => {
-        this.setState({ loading: false, isAuthenticated: user!== null })
-    }
-    //   function(user) {
-    //     if (user) {
-    //       this.setState({ loading: false, isAuthenticated: true })
-    //     } else {
-    //       this.setState({ isAuthenticated: false })
-    //       console.log("stop loading, is not auth")
-    //     }
-    //   }
-    )
+    baseApp.auth().onAuthStateChanged(user => {
+      this.setState({ loading: false, isAuthenticated: user !== null })
+    })
   }
 
   render() {
@@ -73,9 +33,7 @@ export default class PrivateRoute extends React.Component {
               <LinearProgress />
             </div>
           ) : (
-            <Redirect
-              to={{ pathname: "/signin" }}
-            />
+            <Redirect to={{ pathname: "/signin" }} />
           )
         }
       />
