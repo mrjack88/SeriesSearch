@@ -11,13 +11,18 @@ export default class PrivateRoute extends React.Component {
       loading: true,
       isAuthenticated: false
     }
+    this.unsubscribe = {};
   }
-
   componentDidMount() {
-    baseApp.auth().onAuthStateChanged(user => {
+    this.unsubscribe = baseApp.auth().onAuthStateChanged(user => {
       this.setState({ loading: false, isAuthenticated: user !== null })
     })
   }
+
+  componentWillUnmount() {
+    this.unsubscribe()
+  }
+  
 
   render() {
     const { component: Component, ...rest } = this.props
