@@ -31,7 +31,6 @@ async function signout() {
     })
 }
 async function signin(email, password) {
-  console.log(email, password)
   await baseApp
     .auth()
     .signInWithEmailAndPassword(email, password)
