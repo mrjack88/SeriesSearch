@@ -19,7 +19,14 @@ const styles = {
     paddingRight: 24,
     margin: 24,
     display: "inline-block",
-    justifyContent: "center"
+    justifyContent: "center",
+    '@media (max-width:414px)': {
+      margin: "10px 0 10px 0",
+      paddingLeft: 0,
+      paddingRight: 0,
+      paddingTop: 0,
+      paddingBottom: 0,
+    }
   },
   section: {
     display: "flex",
@@ -73,8 +80,8 @@ class Home extends React.Component {
             timeout={{
               appear: 500,
               enter: 300,
-              exit: 200,
-             }}
+              exit: 200
+            }}
             classNames="my-node"
           >
             <Paper className={classes.root} elevation={4}>

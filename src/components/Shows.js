@@ -11,18 +11,25 @@ import { makeStyles } from "@material-ui/styles"
 import React from "react"
 
 const useStyles = makeStyles(theme => ({
-  root: {  
+  root: {
     display: "inline-block",
     justifyContent: "center"
   },
   heading: {
     display: "flex",
     alignItems: "center",
-    paddingLeft: 10
+    paddingLeft: 10,
+    "@media (max-width:414px)": {
+      paddingLeft: 8,
+      fontSize: theme.typography.pxToRem(15)
+    }
   },
   details: {
     fontSize: theme.typography.pxToRem(15),
-    fontWeight: theme.typography.fontWeightRegular
+    fontWeight: theme.typography.fontWeightRegular,
+    "@media (max-width:414px)": {
+      fontSize: theme.typography.pxToRem(13)
+    }
   },
   showName: {}
 }))

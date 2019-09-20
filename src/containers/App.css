@@ -26,6 +26,6 @@ body {
 }
 .my-node-exit-active {
   opacity: 0 !important;
-  transform: translateY(50px) !important;
+  transform: translateY(10px) !important;
   transition: opacity 200ms, transform 200ms !important;
 }
