@@ -1,4 +1,4 @@
-import Collapse from "@material-ui/core/Collapse"
+import Grow from "@material-ui/core/Grow"
 import Paper from "@material-ui/core/Paper"
 import { withStyles } from "@material-ui/styles"
 import queryString from "query-string"
@@ -56,22 +56,24 @@ class Home extends React.Component {
   }
   
   render() {
-    const { classes } = this.props
-    const isThereAnyData = this.props.searchdata.length > 0
+    const { classes, isFetchingData } = this.props
+    const isThereAnyData = this.props.searchdata.length > 0 || false
+    const transitionIn = isThereAnyData && !isFetchingData
     return (
       <div>
         <MenuAppBar handleQueryChange={this.handleQueryChange} query={this.state.query} onSearch={this.getShows} onSignOut={this.props.signout}/>
         <section className={classes.section}>
-          <Collapse in={isThereAnyData}>
-            {isThereAnyData && (
+          <Grow in={transitionIn}  style={{ transformOrigin: 'bottom' }}
+          {...(transitionIn ? { timeout: 400 } : {})}>
+            {transitionIn ? (
               <Paper className={classes.root} elevation={4}>
                 <AlignItemsList
                   query={this.state.query}                  
                   data={this.props.searchdata}
                 />
               </Paper>
-            )}
-          </Collapse>
+            ):<div/>}
+          </Grow>
         </section>
       </div>
     )
@@ -80,7 +82,8 @@ class Home extends React.Component {
 
 const mapStateToProps = function(state) {
   return {
-    searchdata: state.shows.searchdata || []
+    searchdata: state.shows.searchdata || [],
+    isFetchingData: state.shows.isFetchingData
   }
 }
 const mapDispatchToProps = dispatch => {

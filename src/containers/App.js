@@ -7,6 +7,7 @@ import Home from "./Home"
 import NotFound from "./NotFound"
 import SignIn from "./SignIn"
 import Signup from "./Signup"
+import Transition from "./Transition"
 
 const generateClassName = createGenerateClassName({
   productionPrefix: "jss"
@@ -18,6 +19,7 @@ const App = () => {
       <Switch>
         <Route exact path="/signin" component={SignIn} />
         <Route exact path="/signup" component={Signup} />
+        <Route exact path="/transition" component={Transition} />
         <PrivateRoute path="/" component={Home} />
         <Route component={NotFound} />
       </Switch>

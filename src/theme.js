@@ -1,12 +1,21 @@
-import { purple, teal } from "@material-ui/core/colors"
-import { createMuiTheme } from "@material-ui/core/styles"
+import { createMuiTheme } from "@material-ui/core/styles";
 
 // Configure Material UI theme
 const theme = createMuiTheme({
   palette: {
-    primary: { light: teal[300], main: teal[500], dark: teal[700] },
-    secondary: { light: purple[300], main: purple[900] }
-  }
-})
+    primary: {
+      light: '#63a4ff',
+      main: '#1976d2',
+      dark: '#004ba0',
+      contrastText: '#ffffff',
+    },
+    secondary: {
+      light: '#9a67ea',
+      main: '#673ab7',
+      dark: '#320b86',
+      contrastText: '#ffffff',
+    },
+  },
+});
 
 export default theme
