@@ -1,3 +1,4 @@
+import Container from "@material-ui/core/Container"
 import CssBaseline from "@material-ui/core/CssBaseline"
 import LinearProgress from "@material-ui/core/LinearProgress"
 import React from "react"
@@ -11,7 +12,7 @@ export default class PrivateRoute extends React.Component {
       loading: true,
       isAuthenticated: false
     }
-    this.unsubscribe = {};
+    this.unsubscribe = {}
   }
   componentDidMount() {
     this.unsubscribe = baseApp.auth().onAuthStateChanged(user => {
@@ -22,7 +23,6 @@ export default class PrivateRoute extends React.Component {
   componentWillUnmount() {
     this.unsubscribe()
   }
-  
 
   render() {
     const { component: Component, ...rest } = this.props
@@ -31,7 +31,9 @@ export default class PrivateRoute extends React.Component {
         {...rest}
         render={props =>
           this.state.isAuthenticated ? (
-            <Component {...props} />
+            <Container maxWidth="md">
+              <Component {...props} />
+            </Container>
           ) : this.state.loading ? (
             <div>
               <CssBaseline />

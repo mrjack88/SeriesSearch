@@ -11,9 +11,9 @@ import { makeStyles } from "@material-ui/styles"
 import React from "react"
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    width: "100%",
-    maxWidth: 768
+  root: {  
+    display: "inline-block",
+    justifyContent: "center"
   },
   heading: {
     display: "flex",
