@@ -6,7 +6,7 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar"
 import ListItemText from "@material-ui/core/ListItemText"
 import Typography from "@material-ui/core/Typography"
 import { makeStyles } from "@material-ui/styles"
-import React /*{ useEffect }*/ from "react"
+import React from "react"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,10 +21,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function AlignItemsList(props) {
   const classes = useStyles()
-
-  // useEffect(() => {
-  //   props.onSearch()
-  // }, [props.query])
 
   return (
     <List className={classes.root}>
