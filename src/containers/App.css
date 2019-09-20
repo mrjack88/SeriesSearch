@@ -11,3 +11,21 @@ body {
     "Segoe UI Emoji",
     "Segoe UI Symbol";
 }
+
+.my-node-enter {
+  opacity: 0 !important; 
+  transform: translateY(20px);
+}
+.my-node-enter-active {
+  opacity: 1 !important;
+  transform: translateY(0);
+  transition: opacity 500ms, transform 500ms !important;
+}
+.my-node-exit {
+  opacity: 1 !important;
+}
+.my-node-exit-active {
+  opacity: 0 !important;
+  transform: translateY(50px) !important;
+  transition: opacity 200ms, transform 200ms !important;
+}

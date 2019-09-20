@@ -1,10 +1,10 @@
-import Grow from "@material-ui/core/Grow"
 import Paper from "@material-ui/core/Paper"
 import { withStyles } from "@material-ui/styles"
 import queryString from "query-string"
 import React from "react"
 import { connect } from "react-redux"
 import { withRouter } from "react-router"
+import { CSSTransition } from "react-transition-group"
 import { bindActionCreators } from "redux"
 import { showsActions, userActions } from "../actions"
 import MenuAppBar from "../components/AppBar.js"
@@ -36,44 +36,54 @@ class Home extends React.Component {
   handleQueryChange = query => {
     this.setState({ query })
   }
-  
+
   getShows = () => {
     if (this.state.query != "") {
       this.props.history.push({
         pathname: "/",
-        search: "?q="+this.state.query
+        search: "?q=" + this.state.query
       })
       this.props.getShows(this.state.query)
     }
   }
 
-  componentDidMount() {   
-    const parsed = queryString.parse(this.props.location.search);
-    if(parsed.q != undefined)
-    {
-      this.setState({query: parsed.q});
+  componentDidMount() {
+    const parsed = queryString.parse(this.props.location.search)
+    if (parsed.q != undefined) {
+      this.setState({ query: parsed.q })
     }
   }
-  
+
   render() {
     const { classes, isFetchingData } = this.props
     const isThereAnyData = this.props.searchdata.length > 0 || false
     const transitionIn = isThereAnyData && !isFetchingData
     return (
       <div>
-        <MenuAppBar handleQueryChange={this.handleQueryChange} query={this.state.query} onSearch={this.getShows} onSignOut={this.props.signout}/>
+        <MenuAppBar
+          handleQueryChange={this.handleQueryChange}
+          query={this.state.query}
+          onSearch={this.getShows}
+          onSignOut={this.props.signout}
+        />
         <section className={classes.section}>
-          <Grow in={transitionIn}  style={{ transformOrigin: 'bottom' }}
-          {...(transitionIn ? { timeout: 400 } : {})}>
-            {transitionIn ? (
-              <Paper className={classes.root} elevation={4}>
-                <AlignItemsList
-                  query={this.state.query}                  
-                  data={this.props.searchdata}
-                />
-              </Paper>
-            ):<div/>}
-          </Grow>
+          <CSSTransition
+            in={transitionIn}
+            unmountOnExit
+            timeout={{
+              appear: 500,
+              enter: 300,
+              exit: 200,
+             }}
+            classNames="my-node"
+          >
+            <Paper className={classes.root} elevation={4}>
+              <AlignItemsList
+                query={this.state.query}
+                data={this.props.searchdata}
+              />
+            </Paper>
+          </CSSTransition>
         </section>
       </div>
     )
