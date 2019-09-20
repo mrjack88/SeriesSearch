@@ -7,7 +7,7 @@ export const userService = {
 }
 
 async function signup(email, password) {
-  await baseApp
+  return await baseApp
     .auth()
     .createUserWithEmailAndPassword(email, password)
     .catch(function(error) {
@@ -23,7 +23,7 @@ async function signup(email, password) {
     })
 }
 async function signout() {
-  await baseApp
+  return await baseApp
     .auth()
     .signOut()
     .catch(function(error) {
@@ -31,10 +31,10 @@ async function signout() {
     })
 }
 async function signin(email, password) {
-  await baseApp
+  return await baseApp
     .auth()
     .signInWithEmailAndPassword(email, password)
-    .then(response=> response)
+    .then(response => response)
     .catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code
@@ -45,5 +45,5 @@ async function signin(email, password) {
         alert(errorMessage)
       }
       console.log(error)
-    })   
+    })
 }

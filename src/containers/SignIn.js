@@ -4,11 +4,11 @@ import CssBaseline from "@material-ui/core/CssBaseline"
 import Link from "@material-ui/core/Link"
 import Typography from "@material-ui/core/Typography"
 import React from "react"
-import { withRouter } from "react-router"
-import Signin from "../components/Signin"
 import { connect } from "react-redux"
+import { withRouter } from "react-router"
 import { bindActionCreators } from "redux"
 import { userActions } from "../actions"
+import Signin from "../components/Signin"
 
 function Copyright() {
   return (
@@ -28,10 +28,18 @@ class SignIn extends React.Component {
     this.props.doEmailSignIn(email, password)
   }
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.user !== {} && prevProps.user !== this.props.user) {
+    if (prevProps.user !== [] && prevProps.user !== this.props.user) {
       this.props.history.push("/")
     }
   }
+
+  shouldComponentUpdate(nextProps, nextState){
+    if(nextProps.user.length === 0) {
+      return false
+    }
+    return true
+  }
+  
   render() {
     return (
       <Container component="main" maxWidth="xs">
