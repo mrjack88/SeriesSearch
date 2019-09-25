@@ -4,13 +4,18 @@ import { connect } from "react-redux"
 
 class LoadingProgress extends Component {
   render() {
-    return <div>{this.props.isLoading ? (<LinearProgress color="secondary"/>) :null}</div>
+    const { isLoading, isSigningIn } = this.props
+
+    const display = isLoading || isSigningIn
+
+    return <div>{display ? <LinearProgress color="secondary" /> : null}</div>
   }
 }
 
 const mapStateToProps = function(state) {
   return {
-    isLoading: state.shows.isFetchingData || false
+    isLoading: state.shows.isFetchingData || false,
+    isSigningIn: state.user.isFetchingData || false
   }
 }
 

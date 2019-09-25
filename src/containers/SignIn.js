@@ -8,6 +8,7 @@ import { connect } from "react-redux"
 import { withRouter } from "react-router"
 import { bindActionCreators } from "redux"
 import { userActions } from "../actions"
+import LoadingProgress from "../components/LoadingProgress"
 import Signin from "../components/Signin"
 
 function Copyright() {
@@ -33,28 +34,35 @@ class SignIn extends React.Component {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState){
-    if(nextProps.user.length === 0) {
+  shouldComponentUpdate(nextProps, nextState) {
+    if(nextProps.isSigningIn !== this.props.isSigningIn){
+      return true
+    }
+    if (nextProps.user.length === 0) {     
       return false
     }
     return true
   }
-  
+
   render() {
     return (
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Signin onSignIn={this.doEmailSignIn} />
-        <Box mt={8}>
-          <Copyright />
-        </Box>
-      </Container>
+      <React.Fragment>
+        <LoadingProgress />
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Signin onSignIn={this.doEmailSignIn} isLoading = {this.props.isSigningIn}/>
+          <Box mt={8}>
+            <Copyright />
+          </Box>
+        </Container>
+      </React.Fragment>
     )
   }
 }
 const mapStateToProps = function(state) {
   return {
-    user: state.user.userData || []
+    user: state.user.userData || [],
+    isSigningIn: state.user.isFetchingData || false
   }
 }
 const mapDispatchToProps = dispatch => {

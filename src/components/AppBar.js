@@ -105,7 +105,6 @@ function PrimarySearchAppBar(props) {
 
   function logout() {
     props.onSignOut();
-    // props.history.pushyarn start("/signin")
   }
 
   function handleMobileMenuOpen(event) {
@@ -197,7 +196,7 @@ function PrimarySearchAppBar(props) {
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            Material-UI
+            TV Series
           </Typography>
           <div className={classes.search}>
             <InputBase

@@ -12,20 +12,6 @@ import React, { useState } from 'react';
 import { withRouter } from "react-router";
 import { Link as RouterLink } from 'react-router-dom';
 
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
 const useStyles = makeStyles(theme => ({
   '@global': {
     body: {
@@ -57,7 +43,7 @@ const useStyles = makeStyles(theme => ({
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
-  const { onSignup } = props
+  const { onSignIn, isLoading } = props
 
   const handleEmailChange = event => {
     setEmail(event.target.value)
@@ -69,11 +55,12 @@ const useStyles = makeStyles(theme => ({
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    props.onSignIn(email, password)
+    onSignIn(email, password)
   }
 
   return (   
-      <div className={classes.paper}>
+    <div className={classes.paper}>
+    {console.log(props)}
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
@@ -117,6 +104,7 @@ const useStyles = makeStyles(theme => ({
             variant="contained"
             color="primary"
             className={classes.submit}
+            disabled={isLoading}
           >
             Sign In
           </Button>
