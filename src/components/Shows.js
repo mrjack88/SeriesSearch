@@ -40,46 +40,54 @@ export default function AlignItemsList(props) {
   return (
     <div className={classes.root}>
       {props.data.map(item => (
-        <ExpansionPanel key={item.show.id}>
-          <ExpansionPanelSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <Avatar
-              alt={item.show.name}
-              src={
-                item.show.image
-                  ? item.show.image.medium
-                  : "https://ui-avatars.com/api/?name=" + item.show.name
-              }
-            />
-            <Typography className={classes.heading}>
-              {item.show.name}
-            </Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <Typography className={classes.details}>
-              {item.show.summary &&
-                item.show.summary
-                  .replace(/<[/]?p>/g, "")
-                  .replace(/<[/]?b>/g, "")
-                  .replace(/<[/]?i>/g, "")}
-            </Typography>
-          </ExpansionPanelDetails>
-          <Divider />
-          <ExpansionPanelActions>
-            <Button size="small" color="primary">
-              View More
-            </Button>
-          </ExpansionPanelActions>
-        </ExpansionPanel>
+        <CustomPanel key={item.show.id} item={item} classes={classes} />
       ))}
     </div>
   )
 }
-
 AlignItemsList.defaultProps = {
   data: [],
   query: ""
+}
+
+const CustomPanel = props => {
+  const { item, classes } = props
+  return (
+    <ExpansionPanel
+      onChange={() => {
+        console.log(item.show.id + " changed")
+      }}
+    >
+      <ExpansionPanelSummary
+        expandIcon={<ExpandMoreIcon />}
+        aria-controls="panel1a-content"
+        id="panel1a-header"
+      >
+        <Avatar
+          alt={item.show.name}
+          src={
+            item.show.image
+              ? item.show.image.medium
+              : "https://ui-avatars.com/api/?name=" + item.show.name
+          }
+        />
+        <Typography className={classes.heading}>{item.show.name}</Typography>
+      </ExpansionPanelSummary>
+      <ExpansionPanelDetails>
+        <Typography className={classes.details}>
+          {item.show.summary &&
+            item.show.summary
+              .replace(/<[/]?p>/g, "")
+              .replace(/<[/]?b>/g, "")
+              .replace(/<[/]?i>/g, "")}
+        </Typography>
+      </ExpansionPanelDetails>
+      <Divider />
+      <ExpansionPanelActions>
+        <Button size="small" color="primary">
+          View More
+        </Button>
+      </ExpansionPanelActions>
+    </ExpansionPanel>
+  )
 }
