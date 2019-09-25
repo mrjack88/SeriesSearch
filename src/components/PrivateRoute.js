@@ -1,11 +1,20 @@
 import Container from "@material-ui/core/Container"
 import CssBaseline from "@material-ui/core/CssBaseline"
 import LinearProgress from "@material-ui/core/LinearProgress"
+import { withStyles } from "@material-ui/styles"
 import React from "react"
 import { Redirect, Route } from "react-router-dom"
 import baseApp from "../base"
 
-export default class PrivateRoute extends React.Component {
+
+const styles = {
+  root:{
+    height: "calc(100vh - 60px)"
+  }
+
+}
+
+class PrivateRoute extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -25,13 +34,13 @@ export default class PrivateRoute extends React.Component {
   }
 
   render() {
-    const { component: Component, ...rest } = this.props
+    const { component: Component, classes, ...rest } = this.props
     return (
       <Route
         {...rest}
         render={props =>
           this.state.isAuthenticated ? (
-            <Container maxWidth="md">
+            <Container maxWidth="md" className={classes.root}>
               <Component {...props} />
             </Container>
           ) : this.state.loading ? (
@@ -47,3 +56,5 @@ export default class PrivateRoute extends React.Component {
     )
   }
 }
+
+export default withStyles(styles)(PrivateRoute)
