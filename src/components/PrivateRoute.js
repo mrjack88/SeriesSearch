@@ -5,13 +5,12 @@ import { withStyles } from "@material-ui/styles"
 import React from "react"
 import { Redirect, Route } from "react-router-dom"
 import baseApp from "../base"
-
+import MenuAppBar from "../components/AppBar.js"
 
 const styles = {
-  root:{
+  root: {
     height: "calc(100vh - 60px)"
   }
-
 }
 
 class PrivateRoute extends React.Component {
@@ -41,6 +40,7 @@ class PrivateRoute extends React.Component {
         render={props =>
           this.state.isAuthenticated ? (
             <Container maxWidth="md" className={classes.root}>
+              <MenuAppBar />
               <Component {...props} />
             </Container>
           ) : this.state.loading ? (

@@ -8,13 +8,18 @@ import { fade, makeStyles } from "@material-ui/core/styles"
 import Toolbar from "@material-ui/core/Toolbar"
 import Typography from "@material-ui/core/Typography"
 import AccountCircle from "@material-ui/icons/AccountCircle"
+import ArrowBackIcon from "@material-ui/icons/ArrowBack"
 import MailIcon from "@material-ui/icons/Mail"
 import MenuIcon from "@material-ui/icons/Menu"
 import MoreIcon from "@material-ui/icons/MoreVert"
 import NotificationsIcon from "@material-ui/icons/Notifications"
 import SearchIcon from "@material-ui/icons/Search"
-import React from "react"
+import queryString from "query-string"
+import React, { Component } from "react"
+import { connect } from "react-redux"
 import { withRouter } from "react-router-dom"
+import { bindActionCreators } from "redux"
+import { showsActions, userActions } from "../actions"
 import LoadingProgress from "./LoadingProgress"
 
 const useStyles = makeStyles(theme => ({
@@ -104,7 +109,7 @@ function PrimarySearchAppBar(props) {
   }
 
   function logout() {
-    props.onSignOut();
+    props.onSignOut()
   }
 
   function handleMobileMenuOpen(event) {
@@ -182,6 +187,11 @@ function PrimarySearchAppBar(props) {
       </MenuItem>
     </Menu>
   )
+  const handleIconButton = () => {
+    if (props.history.location.pathname !== "/") {
+      props.history.goBack()
+    }
+  }
 
   return (
     <div className={classes.grow}>
@@ -192,28 +202,35 @@ function PrimarySearchAppBar(props) {
             className={classes.menuButton}
             color="inherit"
             aria-label="open drawer"
+            onClick={handleIconButton}
           >
-            <MenuIcon />
+            {props.history.location.pathname === "/" ? (
+              <MenuIcon />
+            ) : (
+              <ArrowBackIcon />
+            )}
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
             TV Series
           </Typography>
-          <div className={classes.search}>
-            <InputBase
-              value={props.query}
-              onChange={handleQueryChange}
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput
-              }}
-              inputProps={{ "aria-label": "search" }}
-              onKeyPress={onKeyPressed}
-            />
-            <div className={classes.searchIcon}>
-              <SearchIcon onClick={searchOnClick} />
+          {props.history.location.pathname === "/" && (
+            <div className={classes.search}>
+              <InputBase
+                value={props.query}
+                onChange={handleQueryChange}
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput
+                }}
+                inputProps={{ "aria-label": "search" }}
+                onKeyPress={onKeyPressed}
+              />
+              <div className={classes.searchIcon}>
+                <SearchIcon onClick={searchOnClick} />
+              </div>
             </div>
-          </div>
+          )}
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton
@@ -239,13 +256,74 @@ function PrimarySearchAppBar(props) {
             </IconButton>
           </div>
         </Toolbar>
-      <LoadingProgress/>
+        <LoadingProgress />
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
-     
     </div>
   )
 }
 
-export default withRouter(PrimarySearchAppBar)
+class MainAppBar extends Component {
+  state = {
+    query: ""
+  }
+
+  handleQueryChange = query => {
+    this.setState({ query })
+  }
+
+  getShows = () => {
+    if (this.state.query != "") {
+      this.props.history.push({
+        pathname: "/",
+        search: "?q=" + this.state.query
+      })
+      this.props.getShows(this.state.query)
+    }
+  }
+
+  componentDidMount() {
+    const parsed = queryString.parse(this.props.location.search)
+    if (parsed.q != undefined) {
+      this.setState({ query: parsed.q })
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.location.search !== prevProps.location.search) {
+      const parsed = queryString.parse(this.props.location.search)
+      if (parsed.q != undefined) {
+        this.setState({ query: parsed.q }, () => {
+          this.props.getShows(parsed.q)
+        })
+      }
+    }
+  }
+
+  render() {
+    return (
+      <PrimarySearchAppBar
+        handleQueryChange={this.handleQueryChange}
+        query={this.state.query}
+        onSearch={this.getShows}
+        onSignOut={this.props.signout}
+        history={this.props.history}
+      />
+    )
+  }
+}
+const mapStateToProps = function(state) {
+  return {}
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    getShows: bindActionCreators(showsActions.getShows, dispatch),
+    signout: bindActionCreators(userActions.signout, dispatch)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(MainAppBar))

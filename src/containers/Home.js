@@ -1,14 +1,10 @@
 import Paper from "@material-ui/core/Paper"
 import MovieCreationOutlinedIcon from "@material-ui/icons/MovieCreationOutlined"
 import { withStyles } from "@material-ui/styles"
-import queryString from "query-string"
 import React from "react"
 import { connect } from "react-redux"
 import { withRouter } from "react-router"
 import { CSSTransition } from "react-transition-group"
-import { bindActionCreators } from "redux"
-import { showsActions, userActions } from "../actions"
-import MenuAppBar from "../components/AppBar.js"
 import AlignItemsList from "../components/Shows.js"
 import "./App.css"
 
@@ -42,42 +38,8 @@ const styles = {
 }
 
 class Home extends React.Component {
-  state = {
-    query: ""
-  }
-
-  handleQueryChange = query => {
-    this.setState({ query })
-  }
-
-  getShows = () => {
-    if (this.state.query != "") {
-      this.props.history.push({
-        pathname: "/",
-        search: "?q=" + this.state.query
-      })
-      this.props.getShows(this.state.query)
-    }
-  }
-
-  componentDidMount() {
-    const parsed = queryString.parse(this.props.location.search)
-    if (parsed.q != undefined) {
-      this.setState({ query: parsed.q })
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if(this.props.location.search !== prevProps.location.search){
-      const parsed = queryString.parse(this.props.location.search)
-      if (parsed.q != undefined) {
-        this.setState(({ query: parsed.q}),()=>{this.props.getShows(parsed.q)} )
-      }
-    }
-  }
-
-  onDetails = (showId) => {
-    this.props.history.push("/shows/"+showId)
+  onDetails = showId => {
+    this.props.history.push("/shows/" + showId)
   }
 
   render() {
@@ -86,12 +48,6 @@ class Home extends React.Component {
     const transitionIn = isThereAnyData && !isFetchingData
     return (
       <React.Fragment>
-        <MenuAppBar
-          handleQueryChange={this.handleQueryChange}
-          query={this.state.query}
-          onSearch={this.getShows}
-          onSignOut={this.props.signout}
-        />
         <section className={classes.section}>
           {!isThereAnyData && (
             <MovieCreationOutlinedIcon className={classes.movie} />
@@ -108,7 +64,6 @@ class Home extends React.Component {
           >
             <Paper className={classes.root} elevation={4}>
               <AlignItemsList
-                query={this.state.query}
                 data={this.props.searchdata}
                 onDetails={this.onDetails}
               />
@@ -127,10 +82,7 @@ const mapStateToProps = function(state) {
   }
 }
 const mapDispatchToProps = dispatch => {
-  return {
-    getShows: bindActionCreators(showsActions.getShows, dispatch),
-    signout: bindActionCreators(userActions.signout, dispatch)
-  }
+  return {}
 }
 
 export default withStyles(styles)(

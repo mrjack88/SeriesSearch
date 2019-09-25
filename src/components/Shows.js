@@ -51,8 +51,7 @@ export default function AlignItemsList(props) {
   )
 }
 AlignItemsList.defaultProps = {
-  data: [],
-  query: ""
+  data: []
 }
 
 const CustomPanel = props => {
@@ -61,11 +60,7 @@ const CustomPanel = props => {
     onDetails(item.show.id)
   }
   return (
-    <ExpansionPanel
-      onChange={() => {
-        console.log(item.show.id + " changed")
-      }}
-    >
+    <ExpansionPanel>
       <ExpansionPanelSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"
@@ -92,7 +87,7 @@ const CustomPanel = props => {
       </ExpansionPanelDetails>
       <Divider />
       <ExpansionPanelActions>
-        <Button size="small" color="primary" onClick={handleMore}>
+        <Button variant="contained" size="small" color="primary" onClick={handleMore}>
           View More
         </Button>
       </ExpansionPanelActions>
