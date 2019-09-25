@@ -1,5 +1,5 @@
 import Paper from "@material-ui/core/Paper"
-import MovieCreationOutlinedIcon from '@material-ui/icons/MovieCreationOutlined'
+import MovieCreationOutlinedIcon from "@material-ui/icons/MovieCreationOutlined"
 import { withStyles } from "@material-ui/styles"
 import queryString from "query-string"
 import React from "react"
@@ -67,6 +67,15 @@ class Home extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if(this.props.location.search !== prevProps.location.search){
+      const parsed = queryString.parse(this.props.location.search)
+      if (parsed.q != undefined) {
+        this.setState(({ query: parsed.q}),()=>{this.props.getShows(parsed.q)} )
+      }
+    }
+  }
+
   render() {
     const { classes, isFetchingData } = this.props
     const isThereAnyData = this.props.searchdata.length > 0 || false
@@ -80,7 +89,9 @@ class Home extends React.Component {
           onSignOut={this.props.signout}
         />
         <section className={classes.section}>
-          {!isThereAnyData && <MovieCreationOutlinedIcon className={classes.movie}/>}
+          {!isThereAnyData && (
+            <MovieCreationOutlinedIcon className={classes.movie} />
+          )}
           <CSSTransition
             in={transitionIn}
             unmountOnExit
