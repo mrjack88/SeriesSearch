@@ -76,6 +76,10 @@ class Home extends React.Component {
     }
   }
 
+  onDetails = (showId) => {
+    this.props.history.push("/shows/"+showId)
+  }
+
   render() {
     const { classes, isFetchingData } = this.props
     const isThereAnyData = this.props.searchdata.length > 0 || false
@@ -106,6 +110,7 @@ class Home extends React.Component {
               <AlignItemsList
                 query={this.state.query}
                 data={this.props.searchdata}
+                onDetails={this.onDetails}
               />
             </Paper>
           </CSSTransition>

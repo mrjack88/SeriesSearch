@@ -40,7 +40,12 @@ export default function AlignItemsList(props) {
   return (
     <div className={classes.root}>
       {props.data.map(item => (
-        <CustomPanel key={item.show.id} item={item} classes={classes} />
+        <CustomPanel
+          key={item.show.id}
+          item={item}
+          classes={classes}
+          onDetails={props.onDetails}
+        />
       ))}
     </div>
   )
@@ -51,7 +56,10 @@ AlignItemsList.defaultProps = {
 }
 
 const CustomPanel = props => {
-  const { item, classes } = props
+  const { item, classes, onDetails } = props
+  const handleMore = () => {
+    onDetails(item.show.id)
+  }
   return (
     <ExpansionPanel
       onChange={() => {
@@ -84,7 +92,7 @@ const CustomPanel = props => {
       </ExpansionPanelDetails>
       <Divider />
       <ExpansionPanelActions>
-        <Button size="small" color="primary">
+        <Button size="small" color="primary" onClick={handleMore}>
           View More
         </Button>
       </ExpansionPanelActions>
