@@ -41,7 +41,7 @@ export default function SignUp(props) {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
-  const { onSignup } = props
+  const { onSignup, isLoading } = props
 
   const handleEmailChange = event => {
     setEmail(event.target.value)
@@ -106,6 +106,7 @@ export default function SignUp(props) {
           variant="contained"
           color="primary"
           className={classes.submit}
+          disabled={isLoading}
         >
           Sign Up
         </Button>

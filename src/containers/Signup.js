@@ -8,6 +8,7 @@ import { connect } from "react-redux"
 import { withRouter } from "react-router-dom"
 import { bindActionCreators } from "redux"
 import { userActions } from "../actions"
+import LoadingProgress from "../components/LoadingProgress"
 import Signup from "../components/Signup"
 
 function Copyright() {
@@ -24,32 +25,35 @@ function Copyright() {
 }
 
 class SignUp extends React.Component {
-
   signupFn = (email, password) => {
-   this.props.doSignup(email, password)
+    this.props.doSignup(email, password)
   }
   componentDidUpdate(prevProps, prevState) {
-    if(prevProps.user !== {}  && prevProps.user !== this.props.user){
-     this.props.history.push("/")
+    if (prevProps.user !== {} && prevProps.user !== this.props.user) {
+      this.props.history.push("/")
     }
   }
-  
+
   render() {
     return (
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Signup onSignup={this.signupFn}/>
-        <Box mt={5}>
-          <Copyright />
-        </Box>
-      </Container>
+      <React.Fragment>
+        <LoadingProgress />
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Signup onSignup={this.signupFn} isLoading = {this.props.isSigningUp}/>
+          <Box mt={5}>
+            <Copyright />
+          </Box>
+        </Container>
+      </React.Fragment>
     )
   }
 }
 
 const mapStateToProps = function(state) {
   return {
-    user: state.user.userData || []
+    user: state.user.userData || [],
+    isSigningUp: state.user.isFetchingData || false
   }
 }
 const mapDispatchToProps = dispatch => {
@@ -58,9 +62,7 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default (
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(withRouter(SignUp))
-)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(SignUp))

@@ -60,7 +60,6 @@ const useStyles = makeStyles(theme => ({
 
   return (   
     <div className={classes.paper}>
-    {console.log(props)}
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
