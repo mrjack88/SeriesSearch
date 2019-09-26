@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const showsService = {
   getShows,
+  getShowById
 };
 
 async function getShows(query) {
@@ -12,4 +13,8 @@ async function getShows(query) {
     } catch (error) {
       console.error(error);
     }
+}
+async function getShowById(id) { 
+      const response = await axios.get("https://api.tvmaze.com/shows/"+id);
+      return response.data; 
 }
