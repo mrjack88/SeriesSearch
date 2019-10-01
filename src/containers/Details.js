@@ -1,3 +1,4 @@
+import Divider from "@material-ui/core/Divider"
 import Grid from "@material-ui/core/Grid"
 import Paper from "@material-ui/core/Paper"
 import Typography from "@material-ui/core/Typography"
@@ -8,9 +9,10 @@ import { withRouter } from "react-router"
 import { CSSTransition } from "react-transition-group"
 import { bindActionCreators } from "redux"
 import { showsActions } from "../actions"
+import SingleLineGridList from "../components/SingleLineGridList"
 import "./App.css"
 
-const styles = {
+const styles = theme => ({
   root: {
     paddingTop: 16,
     paddingBottom: 16,
@@ -21,10 +23,7 @@ const styles = {
     justifyContent: "center",
     "@media (max-width:414px)": {
       margin: "10px 0 10px 0",
-      paddingLeft: 0,
-      paddingRight: 0,
-      paddingTop: 0,
-      paddingBottom: 0
+      padding: 5
     }
   },
   section: {
@@ -32,11 +31,20 @@ const styles = {
     justifyContent: "center",
     marginTop: 60,
     alignItems: "center"
+  },
+  image: {
+    width: "100%"
+  },
+  summary: {
+    "@media (max-width:414px)": {
+      fontSize: theme.typography.pxToRem(15)
+    }
   }
-}
+})
 class Details extends Component {
   componentDidMount() {
     this.props.getShowById(this.props.match.params.id)
+    this.props.getShowCast(this.props.match.params.id)
   }
 
   render() {
@@ -65,8 +73,9 @@ class Details extends Component {
                     {show.name}
                   </Typography>
                 </Grid>
-                <Grid item md={4} xs={12}>
+                <Grid item md={4} sm={12} xs={12}>
                   <img
+                    className={classes.image}
                     alt={show.name}
                     src={
                       show.image
@@ -75,8 +84,12 @@ class Details extends Component {
                     }
                   />
                 </Grid>
-                <Grid item md={8} xs={12}>
-                  <Typography variant="body1" gutterBottom>
+                <Grid item md={8} sm={12} xs={12}>
+                  <Typography
+                    variant="body1"
+                    gutterBottom
+                    className={classes.summary}
+                  >
                     {show.summary &&
                       show.summary
                         .replace(/<[/]?p>/g, "")
@@ -85,8 +98,18 @@ class Details extends Component {
                   </Typography>
                 </Grid>
               </Grid>
+              {this.props.cast.length > 0 && (
+                <React.Fragment>
+                  <Divider />
+                  <Grid item xs={12}>
+                    <SingleLineGridList tileData={this.props.cast} />
+                  </Grid>
+                </React.Fragment>
+              )}
             </Paper>
-          ):<div/>}
+          ) : (
+            <div />
+          )}
         </CSSTransition>
       </div>
     )
@@ -96,12 +119,14 @@ class Details extends Component {
 const mapStateToProps = function(state) {
   return {
     show: state.shows.show || [],
+    cast: state.shows.cast || [],
     isFetchingData: state.shows.isFetchingData
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
-    getShowById: bindActionCreators(showsActions.getShowById, dispatch)
+    getShowById: bindActionCreators(showsActions.getShowById, dispatch),
+    getShowCast: bindActionCreators(showsActions.getShowCast, dispatch)
   }
 }
 

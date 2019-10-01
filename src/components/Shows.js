@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
     "@media (max-width:414px)": {
-      fontSize: theme.typography.pxToRem(13)
+      fontSize: theme.typography.pxToRem(15)
     }
   },
   showName: {}

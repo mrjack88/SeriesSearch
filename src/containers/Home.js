@@ -1,4 +1,3 @@
-import Paper from "@material-ui/core/Paper"
 import MovieCreationOutlinedIcon from "@material-ui/icons/MovieCreationOutlined"
 import { withStyles } from "@material-ui/styles"
 import React from "react"
@@ -62,12 +61,12 @@ class Home extends React.Component {
             }}
             classNames="my-node"
           >
-            <Paper className={classes.root} elevation={4}>
+            <div className={classes.root}>
               <AlignItemsList
                 data={this.props.searchdata}
                 onDetails={this.onDetails}
               />
-            </Paper>
+            </div>
           </CSSTransition>
         </section>
       </React.Fragment>
