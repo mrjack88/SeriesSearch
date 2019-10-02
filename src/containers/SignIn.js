@@ -44,13 +44,17 @@ class SignIn extends React.Component {
     return true
   }
 
+  handleResetPassword = (email) => {
+    console.log(email)
+  }
+
   render() {
     return (
       <React.Fragment>
         <LoadingProgress />
         <Container component="main" maxWidth="xs">
           <CssBaseline />
-          <Signin onSignIn={this.doEmailSignIn} isLoading = {this.props.isSigningIn}/>
+          <Signin onSignIn={this.doEmailSignIn} isLoading = {this.props.isSigningIn} handleResetPassword={this.handleResetPassword}/>
           <Box mt={8}>
             <Copyright />
           </Box>
