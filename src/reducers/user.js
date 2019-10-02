@@ -3,7 +3,8 @@ import { ERROR_RESET_PASSWORD, ERROR_USER_SIGNIN, ERROR_USER_SIGNOUT, ERROR_USER
 const initialState = {
   userData: {},
   error: {},
-  isFetchingData: false
+  isFetchingData: false,
+  resetPasswordData:{}
 }
 
 export default function projects(state = initialState, action) {
@@ -29,7 +30,7 @@ export default function projects(state = initialState, action) {
     case REQUEST_RESET_PASSWORD:
       return { ...state, isFetchingData: true }
     case RECEIVED_RESET_PASSWORD:
-      return { ...state, isFetchingData: false }
+      return { ...state, resetPasswordData: action.response, isFetchingData: false }
     case ERROR_RESET_PASSWORD:
       return { ...state, isFetchingData: false }
     default:

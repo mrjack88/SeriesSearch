@@ -32,6 +32,9 @@ class SignIn extends React.Component {
     if (prevProps.user !== [] && prevProps.user !== this.props.user) {
       this.props.history.push("/")
     }
+    if (prevProps.resetPasswordData !== [] && prevProps.resetPasswordData !== this.props.resetPasswordData) {
+      this.props.history.push("/forgot-password")
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -66,7 +69,8 @@ class SignIn extends React.Component {
 const mapStateToProps = function(state) {
   return {
     user: state.user.userData || [],
-    isSigningIn: state.user.isFetchingData || false
+    isSigningIn: state.user.isFetchingData || false,
+    resetPasswordData: state.user.resetPasswordData || []
   }
 }
 const mapDispatchToProps = dispatch => {
