@@ -12,10 +12,15 @@ export const REQUEST_USER_SIGNIN = 'REQUEST_USER_SIGNIN';
 export const RECEIVED_USER_SIGNIN = 'RECEIVED_USER_SIGNIN';
 export const ERROR_USER_SIGNIN = 'ERROR_USER_SIGNIN';
 
+export const REQUEST_RESET_PASSWORD = 'REQUEST_RESET_PASSWORD';
+export const RECEIVED_RESET_PASSWORD = 'RECEIVED_RESET_PASSWORD';
+export const ERROR_RESET_PASSWORD = 'ERROR_RESET_PASSWORD';
+
 export const userActions = {
   signup,
   signout,
-  signin
+  signin,
+  resetPassword
 };
 
 function signup(email, password) {
@@ -58,6 +63,21 @@ function signin(email, password) {
       },
       error => {
         dispatch({ type: ERROR_USER_SIGNIN, error });
+      }
+    );
+  };
+}
+
+function resetPassword(email) {
+  return dispatch => {
+    dispatch({ type: REQUEST_RESET_PASSWORD });
+
+    userService.resetPassword(email, password).then(
+      response => {
+        dispatch({ type: RECEIVED_RESET_PASSWORD, response });
+      },
+      error => {
+        dispatch({ type: ERROR_RESET_PASSWORD, error });
       }
     );
   };

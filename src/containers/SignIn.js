@@ -45,7 +45,7 @@ class SignIn extends React.Component {
   }
 
   handleResetPassword = (email) => {
-    console.log(email)
+   this.props.resetPassword(email)
   }
 
   render() {
@@ -71,7 +71,8 @@ const mapStateToProps = function(state) {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    doEmailSignIn: bindActionCreators(userActions.signin, dispatch)
+    doEmailSignIn: bindActionCreators(userActions.signin, dispatch),
+    resetPassword: bindActionCreators(userActions.resetPassword, dispatch)
   }
 }
 

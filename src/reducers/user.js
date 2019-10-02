@@ -1,5 +1,4 @@
-import { ERROR_USER_SIGNOUT, ERROR_USER_SIGNUP, RECEIVED_USER_SIGNOUT, RECEIVED_USER_SIGNUP, REQUEST_USER_SIGNOUT, REQUEST_USER_SIGNUP } from "../actions"
-import {RECEIVED_USER_SIGNIN, REQUEST_USER_SIGNIN, ERROR_USER_SIGNIN } from "../actions"
+import { ERROR_RESET_PASSWORD, ERROR_USER_SIGNIN, ERROR_USER_SIGNOUT, ERROR_USER_SIGNUP, RECEIVED_RESET_PASSWORD, RECEIVED_USER_SIGNIN, RECEIVED_USER_SIGNOUT, RECEIVED_USER_SIGNUP, REQUEST_RESET_PASSWORD, REQUEST_USER_SIGNIN, REQUEST_USER_SIGNOUT, REQUEST_USER_SIGNUP } from "../actions"
 
 const initialState = {
   userData: {},
@@ -27,6 +26,12 @@ export default function projects(state = initialState, action) {
       return { ...state, userData: action.response, isFetchingData: false }
     case ERROR_USER_SIGNIN:
       return { ...state, error: action.error, isFetchingData: false }
+    case REQUEST_RESET_PASSWORD:
+      return { ...state, isFetchingData: true }
+    case RECEIVED_RESET_PASSWORD:
+      return { ...state, isFetchingData: false }
+    case ERROR_RESET_PASSWORD:
+      return { ...state, isFetchingData: false }
     default:
       return state
   }
