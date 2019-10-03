@@ -72,11 +72,15 @@ class ResetPassword extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-      if(this.props.confirmResetPasswordData !== prevProps.confirmResetPasswordData){
-          this.props.history.push("/signin")
-      }
+    if (
+      this.props.confirmResetPasswordData !== prevProps.confirmResetPasswordData
+    ) {
+      this.props.history.push({
+        pathname: "/signin",
+        state: { fromResetPassword: true }
+      })
+    }
   }
-  
 
   render() {
     const { classes, isFetchingData } = this.props
