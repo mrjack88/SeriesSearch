@@ -47,7 +47,7 @@ export default function projects(state = initialState, action) {
         isFetchingData: false
       }
     case ERROR_CONFIRM_RESET_PASSWORD:
-      return { ...state, isFetchingData: false }
+      return { ...state, confirmResetPasswordData: false, isFetchingData: false }
     default:
       return state
   }
