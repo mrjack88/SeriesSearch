@@ -4,6 +4,7 @@ import CssBaseline from "@material-ui/core/CssBaseline"
 import Link from "@material-ui/core/Link"
 import React from "react"
 import { Link as RouterLink } from "react-router-dom"
+import Copyright from "../components/Copyright"
 
 const ForgotPasswordLanding = () => {
   return (
@@ -15,7 +16,7 @@ const ForgotPasswordLanding = () => {
           {"Sign in"}
         </Link>
         <Box mt={8}>
-          {/* <Copyright /> */}
+          <Copyright />
         </Box>
       </Container>
     </React.Fragment>
