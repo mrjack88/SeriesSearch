@@ -5,7 +5,7 @@ const initialState = {
   error: {},
   isFetchingData: false,
   resetPasswordData: {},
-  confirmResetPasswordData: {}
+  confirmResetPasswordData: false
 }
 
 export default function projects(state = initialState, action) {
