@@ -4,7 +4,8 @@ export const userService = {
   signup,
   signout,
   signin,
-  resetPassword
+  resetPassword,
+  confirmResetPassword
 }
 
 async function signup(email, password) {
@@ -53,6 +54,20 @@ async function resetPassword(email) {
     .auth()
     .sendPasswordResetEmail(email)
     .then(response => response)
+    .catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code
+      var errorMessage = error.message
+      alert(errorMessage)
+      console.log(error)
+    })
+}
+
+async function confirmResetPassword(code, newPassword) {
+  return await baseApp
+    .auth()
+    .confirmPasswordReset(code, newPassword)
+    .then(() => true)
     .catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code

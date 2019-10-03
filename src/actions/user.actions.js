@@ -16,11 +16,16 @@ export const REQUEST_RESET_PASSWORD = 'REQUEST_RESET_PASSWORD';
 export const RECEIVED_RESET_PASSWORD = 'RECEIVED_RESET_PASSWORD';
 export const ERROR_RESET_PASSWORD = 'ERROR_RESET_PASSWORD';
 
+export const REQUEST_CONFIRM_RESET_PASSWORD = 'REQUEST_CONFIRM_RESET_PASSWORD';
+export const RECEIVED_CONFIRM_RESET_PASSWORD = 'RECEIVED_CONFIRM_RESET_PASSWORD';
+export const ERROR_CONFIRM_RESET_PASSWORD = 'ERROR_CONFIRM_RESET_PASSWORD';
+
 export const userActions = {
   signup,
   signout,
   signin,
-  resetPassword
+  resetPassword,
+  confirmResetPassword
 };
 
 function signup(email, password) {
@@ -78,6 +83,22 @@ function resetPassword(email) {
       },
       error => {
         dispatch({ type: ERROR_RESET_PASSWORD, error });
+      }
+    );
+  };
+}
+
+function confirmResetPassword(code, newPassword) {
+  return dispatch => {
+    dispatch({ type: REQUEST_CONFIRM_RESET_PASSWORD });
+
+    userService.confirmResetPassword(code, newPassword).then(
+      response => {
+        dispatch({ type: RECEIVED_CONFIRM_RESET_PASSWORD, response });
+        console.log("response: "+response)
+      },
+      error => {
+        dispatch({ type: ERROR_CONFIRM_RESET_PASSWORD, error });
       }
     );
   };

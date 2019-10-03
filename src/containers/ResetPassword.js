@@ -9,9 +9,15 @@ import TextField from "@material-ui/core/TextField"
 import Typography from "@material-ui/core/Typography"
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined"
 import { withStyles } from "@material-ui/styles"
+import queryString from "query-string"
 import React from "react"
+import { connect } from "react-redux"
+import { withRouter } from "react-router"
 import { Link as RouterLink } from "react-router-dom"
+import { bindActionCreators } from "redux"
+import { userActions } from "../actions"
 import Copyright from "../components/Copyright"
+import LoadingProgress from "../components/LoadingProgress"
 
 const styles = theme => ({
   "@global": {
@@ -41,11 +47,13 @@ const styles = theme => ({
 class ResetPassword extends React.Component {
   state = {
     password: "",
-    repeatPassword: ""
+    repeatPassword: "",
+    code: ""
   }
 
   handleSubmit = event => {
     event.preventDefault()
+    this.props.confirmResetPassword(this.state.code, this.state.password)
   }
 
   handlePasswordChange = event => {
@@ -56,13 +64,27 @@ class ResetPassword extends React.Component {
     this.setState({ repeatPassword: event.target.value })
   }
 
+  componentDidMount() {
+    const parsed = queryString.parse(this.props.location.search)
+    if (parsed.oobCode != undefined) {
+      this.setState({ code: parsed.oobCode })
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+      if(this.props.confirmResetPasswordData !== prevProps.confirmResetPasswordData){
+          this.props.history.push("/signin")
+      }
+  }
+  
+
   render() {
-    const { classes } = this.props
+    const { classes, isFetchingData } = this.props
     const { password, repeatPassword } = this.state
-    const isLoading = false
     const validPassword = password === repeatPassword
     return (
       <React.Fragment>
+        <LoadingProgress />
         <Container component="main" maxWidth="xs">
           <CssBaseline />
           <div className={classes.paper}>
@@ -72,7 +94,11 @@ class ResetPassword extends React.Component {
             <Typography component="h1" variant="h5">
               Reset your Password
             </Typography>
-            <form className={classes.form} noValidate onSubmit={this.handleSubmit}>
+            <form
+              className={classes.form}
+              noValidate
+              onSubmit={this.handleSubmit}
+            >
               <TextField
                 autoFocus
                 variant="outlined"
@@ -108,7 +134,7 @@ class ResetPassword extends React.Component {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
-                disabled={isLoading}
+                disabled={isFetchingData || !validPassword}
               >
                 Reset
               </Button>
@@ -130,5 +156,24 @@ class ResetPassword extends React.Component {
     )
   }
 }
+const mapStateToProps = function(state) {
+  return {
+    isFetchingData: state.user.isFetchingData,
+    confirmResetPasswordData: state.user.confirmResetPasswordData
+  }
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    confirmResetPassword: bindActionCreators(
+      userActions.confirmResetPassword,
+      dispatch
+    )
+  }
+}
 
-export default (withStyles(styles)(ResetPassword))
+export default withStyles(styles)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(withRouter(ResetPassword))
+)
