@@ -22,6 +22,7 @@ async function signup(email, password) {
         alert(errorMessage)
       }
       console.log(error)
+      throw(error)
     })
 }
 async function signout() {
@@ -47,6 +48,7 @@ async function signin(email, password) {
         alert(errorMessage)
       }
       console.log(error)
+      throw(error)
     })
 }
 async function resetPassword(email) {
@@ -60,6 +62,7 @@ async function resetPassword(email) {
       var errorMessage = error.message
       alert(errorMessage)
       console.log(error)
+      throw(error)
     })
 }
 
@@ -67,12 +70,13 @@ async function confirmResetPassword(code, newPassword) {
   return await baseApp
     .auth()
     .confirmPasswordReset(code, newPassword)
-    .then(() => true)
+    .then((response) => response)
     .catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code
       var errorMessage = error.message
       alert(errorMessage)
       console.log(error)
+      throw(error)
     })
 }
