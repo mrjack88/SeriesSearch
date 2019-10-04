@@ -95,7 +95,6 @@ function confirmResetPassword(code, newPassword) {
     userService.confirmResetPassword(code, newPassword).then(
       response => {
         dispatch({ type: RECEIVED_CONFIRM_RESET_PASSWORD, response });
-        console.log("response: "+response)
       },
       error => {
         dispatch({ type: ERROR_CONFIRM_RESET_PASSWORD, error });
