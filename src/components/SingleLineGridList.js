@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
   },
   gridList: {
     flexWrap: "nowrap",
-    height: 245
+    // height: 450
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
   },
   title: {
