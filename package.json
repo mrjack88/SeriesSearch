@@ -15,7 +15,7 @@
     "@material-ui/styles": "^4.4.1",
     "axios": "^0.19.0",
     "cross-env": "^5.2.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "firebase": "^6.6.1",
     "query-string": "^6.8.3",
     "razzle": "^3.0.0",
